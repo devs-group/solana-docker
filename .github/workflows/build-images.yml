@@ -1,30 +1,27 @@
 name: Build docker images
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  push:
+    branches:
+      - 'master'
+permissions:
+  packages: write
+  contents: read
+
 jobs:
-  build and push amd64:
+  amd64:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Build and Publish latest Docker image
-        uses: VaultVulp/gp-docker-action@1.1.12
+      - name: GHCR-Action
+        uses: KuhlTime/ghcr-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: solana-amd64
-          dockerfile: Dockerfile
+          token: ${{ secrets.GITHUB_TOKEN }}
   
-  build and push arm64:
+  arm64:
     runs-on: macos-latest
-    if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Build and Publish latest Docker image
-        uses: VaultVulp/gp-docker-action@1.1.12
+      - name: GHCR-Action
+        uses: KuhlTime/ghcr-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          image-name: solana-arm64
-          dockerfile: Dockerfile
-          custom-args: --build-arg BUILDARCH=arm64
+          token: ${{ secrets.GITHUB_TOKEN }}
+          build-args: |
+            BUILDARCH: "arm64"
