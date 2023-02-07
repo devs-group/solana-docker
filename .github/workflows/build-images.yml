@@ -1,8 +1,8 @@
 name: Build docker images
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: Building and pushing images
 on: [push]
 jobs:
-  build and push amd64:
+  build_and_push_amd64:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -15,7 +15,7 @@ jobs:
           image-name: solana-amd64
           dockerfile: Dockerfile
   
-  build and push arm64:
+  build_and_push_arm64:
     runs-on: macos-latest
     if: github.ref == 'refs/heads/main'
     steps:
