@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the amd64 image
       run: docker build . --tag solana:amd64
+      run: docker push ghcr.io/devs-group/solana:amd64
       
   arm64:
     runs-on: macos-latest
@@ -19,4 +20,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the arm64 image
-      run: docker build . --tag solana:arm64
+      run: docker build . --build-arg BUILDARCH=arm64 --tag solana:arm64
