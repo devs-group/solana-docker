@@ -15,7 +15,7 @@ RUN wget -O /app/solana.tar.gz https://github.com/solana-labs/solana/archive/ref
 RUN mkdir solana; tar -C solana --strip-components=1 -xvf solana.tar.gz
 RUN cd solana; ./scripts/cargo-install-all.sh .
 
-FROM --platform=linux/$BUILD_ARCHITECTURE ubuntu:20.04 as final
+FROM ubuntu:20.04 as final
 
 WORKDIR /app
 
