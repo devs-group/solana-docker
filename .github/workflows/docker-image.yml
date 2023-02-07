@@ -28,4 +28,8 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
+<<<<<<< HEAD
           tags: ghcr.io/${{ github.repository }}:amd64
+=======
+          tags: ghcr.io/${{ github.repository }}:${{ env.tag }}
+>>>>>>> 620f988bb15fb514189081f1bd86fd8f62318164
