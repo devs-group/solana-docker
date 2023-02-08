@@ -1,5 +1,5 @@
 ARG BUILDARCH=amd64
-FROM --platform=linux/${BUILDARCH} rust:latest as build
+FROM --platform=linux/${BUILDARCH} rust:latest AS build
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN wget -O /app/solana.tar.gz https://github.com/solana-labs/solana/archive/ref
 RUN mkdir solana; tar -C solana --strip-components=1 -xvf solana.tar.gz
 RUN cd solana; ./scripts/cargo-install-all.sh .
 
-FROM ubuntu:20.04 as final
+FROM alpine:3.17.1 AS final
 
 WORKDIR /app
 
