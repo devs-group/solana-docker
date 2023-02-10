@@ -39,11 +39,16 @@ RUN apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 RUN CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc cargo build --release --target ${RUST_TARGET}
 
 
+FROM build-${TARGETARCH} as binaries
+
+RUN cp -fr /app/solana/target/${RUST_TARGET}/release /app/solana/bin
+
+
 FROM alpine:3.17 as final
 
 WORKDIR /solana
 
-COPY --from=build-${TARGETARCH} /app/solana/target/${RUST_TARGET}/release ./bin
+COPY --from=binaries /app/solana/bin ./bin
 
 ENV PATH="/solana"/bin:"$PATH"
 
