@@ -44,7 +44,7 @@ FROM build-${TARGETARCH} as binaries
 RUN cp -fr /app/solana/target/${RUST_TARGET}/release /app/solana/bin
 
 
-FROM alpine:3.17 as final
+FROM debian:latest as final
 
 WORKDIR /solana
 
