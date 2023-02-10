@@ -43,7 +43,7 @@ FROM alpine:3.17
 
 WORKDIR /solana
 
-COPY --from=build-${TARGETARCH} /app/solana/target/${RUST_TARGET}/release .
+COPY --from=build-${TARGETARCH} /app/solana/target/${RUST_TARGET}/release ./bin
 
 ENV PATH="/solana"/bin:"$PATH"
 
