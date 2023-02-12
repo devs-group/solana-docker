@@ -48,6 +48,9 @@ FROM debian:latest as final
 
 WORKDIR /solana
 
+RUN apt-get update
+RUN apt-get install  -y bzip2
+
 COPY --from=binaries /app/solana/bin ./bin
 
 ENV PATH="/solana"/bin:"$PATH"
