@@ -32,7 +32,7 @@ The only way to do so is to build from source.
     This runs the **solana-test-validator** by default. To run the **solana-validator** use:
 
     ```
-
+    docker run ghcr.io/devs-group/solana-docker solana-validator
     ```
 
 ***

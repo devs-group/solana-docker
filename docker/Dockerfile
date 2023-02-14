@@ -89,6 +89,4 @@ COPY --from=binaries /app/solana/bin ./bin
 
 ENV PATH="/solana"/bin:"$PATH"
 
-ENTRYPOINT [ "solana-test-validator","--reset"]
-
-CMD [""]
+CMD ["solana-test-validator", "--reset"]
