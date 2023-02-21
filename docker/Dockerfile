@@ -21,7 +21,7 @@ RUN git checkout origin/v${SOLANA_VERSION}
 
 FROM base as build-amd64
 ARG RUST_TARGET=x86_64-unknown-linux-gnu
-RUN cargo ${RUST_VERSION} build --release --target ${RUST_TARGET}
+RUN cargo +${RUST_VERSION} build --release --target ${RUST_TARGET}
 
 
 FROM base as build-arm64
@@ -38,7 +38,7 @@ RUN rustup target add ${RUST_TARGET}
 RUN apt-get install -y libudev-dev:arm64
 RUN apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
-RUN CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc cargo ${RUST_VERSION} build --release --target ${RUST_TARGET}
+RUN CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc cargo +${RUST_VERSION} build --release --target ${RUST_TARGET}
 
 
 FROM build-${TARGETARCH} as binaries
