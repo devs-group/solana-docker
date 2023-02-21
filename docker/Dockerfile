@@ -11,7 +11,7 @@ RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup component add rustfmt
 
-ARG SOLANA_VERSION=1.14
+ARG SOLANA_VERSION=1.13
 RUN git clone https://github.com/solana-labs/solana.git
 WORKDIR /app/solana
 RUN git checkout origin/v${SOLANA_VERSION}
