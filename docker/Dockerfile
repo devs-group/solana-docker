@@ -1,6 +1,8 @@
 FROM --platform=$BUILDPLATFORM debian:latest as base
 WORKDIR /app
 ARG TARGETARCH
+ARG RUST_VERSION=1.59
+ARG SOLANA_VERSION=1.13
 
 RUN dpkg --add-architecture ${TARGETARCH}
 
@@ -10,9 +12,8 @@ RUN apt-get install -y curl git libssl-dev libudev-dev pkg-config zlib1g-dev llv
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup component add rustfmt
-RUN rustup install 1.59.0
+RUN rustup install ${RUST_VERSION}
 
-ARG SOLANA_VERSION=1.13
 RUN git clone https://github.com/solana-labs/solana.git
 WORKDIR /app/solana
 RUN git checkout origin/v${SOLANA_VERSION}
@@ -20,7 +21,7 @@ RUN git checkout origin/v${SOLANA_VERSION}
 
 FROM base as build-amd64
 ARG RUST_TARGET=x86_64-unknown-linux-gnu
-RUN cargo build --release --target ${RUST_TARGET}
+RUN cargo ${RUST_VERSION} build --release --target ${RUST_TARGET}
 
 
 FROM base as build-arm64
@@ -37,7 +38,7 @@ RUN rustup target add ${RUST_TARGET}
 RUN apt-get install -y libudev-dev:arm64
 RUN apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
-RUN CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc cargo build --release --target ${RUST_TARGET}
+RUN CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=/usr/bin/aarch64-linux-gnu-gcc cargo ${RUST_VERSION} build --release --target ${RUST_TARGET}
 
 
 FROM build-${TARGETARCH} as binaries
