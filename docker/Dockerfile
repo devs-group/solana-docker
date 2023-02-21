@@ -4,12 +4,13 @@ ARG TARGETARCH
 
 RUN dpkg --add-architecture ${TARGETARCH}
 
-RUN apt-get update && apt-get upgrade
+RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y curl git libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler gcc-multilib
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup component add rustfmt
+RUN rustup install 1.59.0
 
 ARG SOLANA_VERSION=1.13
 RUN git clone https://github.com/solana-labs/solana.git
