@@ -2,7 +2,7 @@ FROM --platform=$BUILDPLATFORM debian:latest as base
 WORKDIR /app
 ARG TARGETARCH
 ARG RUST_VERSION=1.59
-ARG SOLANA_VERSION=1.13
+ARG SOLANA_VERSION=1.13.6
 
 RUN dpkg --add-architecture ${TARGETARCH}
 
@@ -16,7 +16,7 @@ RUN rustup install ${RUST_VERSION}
 
 RUN git clone https://github.com/solana-labs/solana.git
 WORKDIR /app/solana
-RUN git checkout origin/v${SOLANA_VERSION}
+RUN git checkout tags/v${SOLANA_VERSION} -b ${SOLANA_VERSION}
 
 
 FROM base as build-amd64
