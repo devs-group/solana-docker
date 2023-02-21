@@ -7,7 +7,7 @@ ARG SOLANA_VERSION=1.13
 RUN dpkg --add-architecture ${TARGETARCH}
 
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y curl git libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler gcc-multilib
+RUN apt-get install -y curl git libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang make gcc-multilib
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
