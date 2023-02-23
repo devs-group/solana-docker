@@ -1,22 +1,20 @@
 FROM --platform=$BUILDPLATFORM debian:latest as base
 WORKDIR /app
 ARG TARGETARCH
-ARG RUST_VERSION=1.60
-ARG SOLANA_VERSION=1.14.16
 
 RUN dpkg --add-architecture ${TARGETARCH}
 
-RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && apt-get upgrade
 RUN apt-get install -y curl git libssl-dev libudev-dev pkg-config zlib1g-dev llvm clang cmake make libprotobuf-dev protobuf-compiler gcc-multilib
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 RUN rustup component add rustfmt
-RUN rustup install ${RUST_VERSION}
 
+ARG SOLANA_VERSION=1.14.16
 RUN git clone https://github.com/solana-labs/solana.git
 WORKDIR /app/solana
-RUN git checkout tags/v${SOLANA_VERSION} -b ${SOLANA_VERSION}
+RUN git checkout tags/v${SOLANA_VERSION} -b v${SOLANA_VERSION}
 
 
 FROM base as build-amd64
@@ -50,6 +48,7 @@ RUN cp -fr /app/solana/target/${RUST_TARGET}/release/. .
 
 FROM debian:latest as final
 
+# RPC json
 EXPOSE 8899/tcp
 # RPC pubsub
 EXPOSE 8900/tcp
