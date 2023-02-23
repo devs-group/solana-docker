@@ -32,7 +32,7 @@ ENV PKG_CONFIG_SYSROOT_DIR=/usr/aarch64-linux-gnu
 ENV PKG_CONFIG_SYSTEM_LIBRARY_PATH=/usr/lib/aarch64-linux-gnu
 ENV PKG_CONFIG_SYSTEM_INCLUDE_PATH=/usr/aarch64-linux-gnu/include
 
-RUN rustup target add ${RUST_TARGET}
+RUN ./rustup target add ${RUST_TARGET}
 RUN apt-get install -y libudev-dev:arm64
 RUN apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
